@@ -1,8 +1,5 @@
 import React from 'react';
-import CreatePersona from './components/Persona/CreatePersona';
-import DeletePersona from './components/Persona/DeletePersona';
-import UpdatePersona from './components/Persona/UpdatePersona';
-import ReadPersona from './components/Persona/ReadPersona';
+import { CreatePersona, DeletePersona, UpdatePersona, ReadPersona } from './components/Persona';
 
 function App() {
   return (
