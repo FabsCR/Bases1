@@ -1,5 +1,7 @@
 import React from 'react';
 import { CreatePersona, DeletePersona, UpdatePersona, ReadPersona } from './components/Persona';
+import { CreateEditorial, DeleteEditorial, UpdateEditorial, ReadEditorial } from './components/Editorial';
+
 
 function App() {
   return (
@@ -9,6 +11,11 @@ function App() {
       <DeletePersona />
       <UpdatePersona />
       <ReadPersona />
+      <h1>Gestión de Editoriales</h1>
+      <CreateEditorial />
+      <DeleteEditorial />
+      <UpdateEditorial />
+      <ReadEditorial />
     </div>
   );
 }
