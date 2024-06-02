@@ -465,6 +465,82 @@ def delete_inventario(id_libro):
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
+# Rutas Prestamo
+
+@app.route('/prestamo', methods=['POST'])
+def create_prestamo():
+    data = request.json
+    id_libro = data.get('id_libro')
+    id_usuario = data.get('id_usuario')
+    fecha_prestamo = data.get('fecha_prestamo')
+    fecha_devolucion = data.get('fecha_devolucion')
+    estado = data.get('estado')
+
+    db = get_db_connection()
+    cursor = db.cursor()
+    try:
+        cursor.execute("INSERT INTO Prestamo (IDLibro, IDUsuario, FechaPrestamo, FechaDevolucion, Estado) VALUES (%s, %s, %s, %s, %s)", (id_libro, id_usuario, fecha_prestamo, fecha_devolucion, estado))
+        db.commit()
+        cursor.close()
+        db.close()
+        return jsonify({'message': 'Préstamo creado'}), 201
+    except Exception as e:
+        db.rollback()
+        cursor.close()
+        db.close()
+        return jsonify({'error': str(e)}), 500
+
+@app.route('/prestamo/<int:id_prestamo>', methods=['DELETE'])
+def delete_prestamo(id_prestamo):
+    db = get_db_connection()
+    cursor = db.cursor()
+    try:
+        cursor.execute("DELETE FROM Prestamo WHERE IDPrestamo = %s", (id_prestamo,))
+        db.commit()
+        cursor.close()
+        db.close()
+        return jsonify({'message': 'Préstamo eliminado'}), 200
+    except Exception as e:
+        db.rollback()
+        cursor.close()
+        db.close()
+        return jsonify({'error': str(e)}), 500
+
+@app.route('/prestamo/<int:id_prestamo>', methods=['PUT'])
+def update_prestamo(id_prestamo):
+    data = request.json
+    id_libro = data.get('id_libro')
+    id_usuario = data.get('id_usuario')
+    fecha_prestamo = data.get('fecha_prestamo')
+    fecha_devolucion = data.get('fecha_devolucion')
+    estado = data.get('estado')
+
+    db = get_db_connection()
+    cursor = db.cursor()
+    try:
+        cursor.execute("UPDATE Prestamo SET IDLibro = %s, IDUsuario = %s, FechaPrestamo = %s, FechaDevolucion = %s, Estado = %s WHERE IDPrestamo = %s", (id_libro, id_usuario, fecha_prestamo, fecha_devolucion, estado, id_prestamo))
+        db.commit()
+        cursor.close()
+        db.close()
+        return jsonify({'message': 'Préstamo actualizado'}), 200
+    except Exception as e:
+        db.rollback()
+        cursor.close()
+        db.close()
+        return jsonify({'error': str(e)}), 500
+
+@app.route('/prestamo', methods=['GET'])
+def get_prestamos():
+    db = get_db_connection()
+    cursor = db.cursor()
+    cursor.execute("SELECT * FROM Prestamo")
+    rows = cursor.fetchall()
+    prestamos = [{'id_prestamo': row[0], 'id_libro': row[1], 'id_usuario': row[2], 'fecha_prestamo': row[3], 'fecha_devolucion': row[4], 'estado': row[5]} for row in rows]
+    cursor.close()
+    db.close()
+    return jsonify(prestamos), 200
+
+
 
 if __name__ == '__main__':
     app.run(debug=True)

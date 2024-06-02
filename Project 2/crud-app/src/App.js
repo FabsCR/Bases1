@@ -6,6 +6,7 @@ import { CreateUsuario, DeleteUsuario, UpdateUsuario, ReadUsuario } from './comp
 import { CreateGenero, DeleteGenero, UpdateGenero, ReadGenero } from './components/Genero';
 import { CreateLibro, DeleteLibro, UpdateLibro, ReadLibro } from './components/Libro';
 import { CreateInventario, DeleteInventario, UpdateInventario, ReadInventario } from './components/Inventario';
+import { CreatePrestamo, DeletePrestamo, UpdatePrestamo, ReadPrestamo } from './components/Prestamo';
 
 function App() {
   return (
@@ -45,6 +46,11 @@ function App() {
       <DeleteInventario />
       <UpdateInventario />
       <ReadInventario />
+      <h1>Gestión de Préstamos</h1>
+      <CreatePrestamo />
+      <DeletePrestamo />
+      <UpdatePrestamo />
+      <ReadPrestamo />
     </div>
   );
 }
