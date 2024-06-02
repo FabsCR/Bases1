@@ -18,7 +18,7 @@ const ReadPersona = () => {
             <ul>
                 {personas.map(persona => (
                     <li key={persona.codigoPersona}>
-                        {persona.nombre} {persona.apellido}
+                        {persona.codigoPersona}: {persona.nombre} {persona.apellido}
                     </li>
                 ))}
             </ul>

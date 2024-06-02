@@ -11,7 +11,7 @@ const UpdateEditorial = () => {
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ pais }),
+            body: JSON.stringify({ pais }), // Aquí se envía el país actualizado
         });
         const data = await response.json();
         console.log('Editorial actualizada:', data);
