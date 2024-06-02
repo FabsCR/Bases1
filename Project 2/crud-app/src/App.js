@@ -2,7 +2,7 @@ import React from 'react';
 import { CreatePersona, DeletePersona, UpdatePersona, ReadPersona } from './components/Persona';
 import { CreateEditorial, DeleteEditorial, UpdateEditorial, ReadEditorial } from './components/Editorial';
 import { CreateAutor, DeleteAutor, UpdateAutor, ReadAutor } from './components/Autor';
-
+import { CreateUsuario, DeleteUsuario, UpdateUsuario, ReadUsuario } from './components/Usuario';
 
 function App() {
   return (
@@ -22,6 +22,11 @@ function App() {
       <DeleteAutor />
       <UpdateAutor />
       <ReadAutor />
+      <h1>Gestión de Usuarios</h1>
+      <CreateUsuario />
+      <DeleteUsuario />
+      <UpdateUsuario />
+      <ReadUsuario />
     </div>
   );
 }

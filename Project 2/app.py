@@ -13,6 +13,8 @@ def get_db_connection():
         db='proyecto_basededatos1'
     )
 
+# Rutas Persona
+
 @app.route('/persona', methods=['POST'])
 def create_persona():
     db = get_db_connection()
@@ -61,6 +63,8 @@ def get_personas():
     db.close()
     return jsonify(personas), 200
 
+# Rutas Editorial
+
 @app.route('/editorial', methods=['POST'])
 def create_editorial():
     db = get_db_connection()
@@ -82,7 +86,7 @@ def delete_editorial(nombre):
         cursor.execute("DELETE FROM autor WHERE Editorial_A = %s", (nombre,))
         db.commit()
         
-        # Luego, eliminar la editorial
+        # eliminar la editorial
         cursor.execute("DELETE FROM editorial WHERE Nombre = %s", (nombre,))
         db.commit()
         
@@ -131,7 +135,7 @@ def get_editoriales():
     db.close()
     return jsonify(editoriales), 200
 
-# Autor
+# Rutas Autor
 
 @app.route('/autor', methods=['POST'])
 def create_autor():
@@ -183,6 +187,56 @@ def get_autores():
     cursor.close()
     db.close()
     return jsonify(autores), 200
+
+
+# Rutas Usuario
+
+@app.route('/usuario', methods=['POST'])
+def create_usuario():
+    db = get_db_connection()
+    id_persona = request.json['id_persona']
+    correo = request.json['correo']
+    telefono = request.json['telefono']
+    cursor = db.cursor()
+    cursor.execute("INSERT INTO Usuario (IDPersona, Correo, telefono) VALUES (%s, %s, %s)", (id_persona, correo, telefono))
+    db.commit()
+    cursor.close()
+    db.close()
+    return jsonify({'message': 'Usuario creado'}), 201
+
+@app.route('/usuario/<int:id_usuario>', methods=['DELETE'])
+def delete_usuario(id_usuario):
+    db = get_db_connection()
+    cursor = db.cursor()
+    cursor.execute("DELETE FROM Usuario WHERE IDUsuario = %s", (id_usuario,))
+    db.commit()
+    cursor.close()
+    db.close()
+    return jsonify({'deleted': True}), 200
+
+@app.route('/usuario/<int:id_usuario>', methods=['PUT'])
+def update_usuario(id_usuario):
+    db = get_db_connection()
+    id_persona = request.json['id_persona']
+    correo = request.json['correo']
+    telefono = request.json['telefono']
+    cursor = db.cursor()
+    cursor.execute("UPDATE Usuario SET IDPersona = %s, Correo = %s, telefono = %s WHERE IDUsuario = %s", (id_persona, correo, telefono, id_usuario))
+    db.commit()
+    cursor.close()
+    db.close()
+    return jsonify({'updated': True}), 200
+
+@app.route('/usuario', methods=['GET'])
+def get_usuarios():
+    db = get_db_connection()
+    cursor = db.cursor()
+    cursor.execute("SELECT * FROM Usuario")
+    rows = cursor.fetchall()
+    usuarios = [{'id_usuario': row[0], 'id_persona': row[1], 'correo': row[2], 'telefono': row[3]} for row in rows]
+    cursor.close()
+    db.close()
+    return jsonify(usuarios), 200
 
 
 if __name__ == '__main__':
