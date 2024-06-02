@@ -131,5 +131,59 @@ def get_editoriales():
     db.close()
     return jsonify(editoriales), 200
 
+# Autor
+
+@app.route('/autor', methods=['POST'])
+def create_autor():
+    db = get_db_connection()
+    print("Datos recibidos:", request.json)  # Agregar esta línea para imprimir los datos recibidos
+    id_persona = request.json['id_persona']
+    editorial = request.json['editorial']
+    cursor = db.cursor()
+    try:
+        cursor.execute("INSERT INTO Autor (IDPersona, Editorial_A) VALUES (%s, %s)", (id_persona, editorial))
+        db.commit()
+        cursor.close()
+        db.close()
+        return jsonify({'message': 'Autor creado'}), 201
+    except Exception as e:
+        print("Error al crear autor:", e) 
+        return jsonify({'error': str(e)}), 500
+
+
+@app.route('/autor/<int:id_autor>', methods=['DELETE'])
+def delete_autor(id_autor):
+    db = get_db_connection()
+    cursor = db.cursor()
+    cursor.execute("DELETE FROM Autor WHERE IDAutor = %s", (id_autor,))
+    db.commit()
+    cursor.close()
+    db.close()
+    return jsonify({'deleted': True}), 200
+
+@app.route('/autor/<int:id_autor>', methods=['PUT'])
+def update_autor(id_autor):
+    db = get_db_connection()
+    id_persona = request.json['id_persona']
+    editorial = request.json['editorial']
+    cursor = db.cursor()
+    cursor.execute("UPDATE Autor SET IDPersona = %s, Editorial_A = %s WHERE IDAutor = %s", (id_persona, editorial, id_autor))
+    db.commit()
+    cursor.close()
+    db.close()
+    return jsonify({'updated': True}), 200
+
+@app.route('/autor', methods=['GET'])
+def get_autores():
+    db = get_db_connection()
+    cursor = db.cursor()
+    cursor.execute("SELECT * FROM Autor")
+    rows = cursor.fetchall()
+    autores = [{'id_autor': row[0], 'id_persona': row[1], 'editorial': row[2]} for row in rows]
+    cursor.close()
+    db.close()
+    return jsonify(autores), 200
+
+
 if __name__ == '__main__':
     app.run(debug=True)
