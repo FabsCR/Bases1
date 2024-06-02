@@ -5,6 +5,7 @@ import { CreateAutor, DeleteAutor, UpdateAutor, ReadAutor } from './components/A
 import { CreateUsuario, DeleteUsuario, UpdateUsuario, ReadUsuario } from './components/Usuario';
 import { CreateGenero, DeleteGenero, UpdateGenero, ReadGenero } from './components/Genero';
 import { CreateLibro, DeleteLibro, UpdateLibro, ReadLibro } from './components/Libro';
+import { CreateInventario, DeleteInventario, UpdateInventario, ReadInventario } from './components/Inventario';
 
 function App() {
   return (
@@ -39,6 +40,11 @@ function App() {
       <DeleteLibro />
       <UpdateLibro />
       <ReadLibro />
+      <h1>Gestión de Inventarios</h1>
+      <CreateInventario />
+      <DeleteInventario />
+      <UpdateInventario />
+      <ReadInventario />
     </div>
   );
 }

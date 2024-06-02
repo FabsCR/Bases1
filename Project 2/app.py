@@ -377,6 +377,94 @@ def get_libros():
     db.close()
     return jsonify(libros), 200
 
+# Rutas Inventario
+
+# Operación para crear un registro en el inventario
+@app.route('/inventario', methods=['POST'])
+def create_inventario():
+    try:
+        # Obtener datos del cuerpo de la solicitud
+        data = request.json
+        id_libro = data.get('id_libro')
+        cantidad_libros = data.get('cantidad_libros')
+        status = data.get('status')
+        fecha_adquisicion = data.get('fecha_adquisicion')
+
+        # Verificar si el libro existe
+        db = get_db_connection()
+        cursor = db.cursor()
+        cursor.execute("SELECT IDLibro FROM Libro WHERE IDLibro = %s", (id_libro,))
+        if not cursor.fetchone():
+            cursor.close()
+            db.close()
+            return jsonify({'error': f'El libro con ID {id_libro} no existe'}), 404
+
+        # Insertar el registro en la tabla Inventario
+        cursor.execute("INSERT INTO Inventario (IDLibro, CantidadLibros, Status, FechaAdquisicion) VALUES (%s, %s, %s, %s)", (id_libro, cantidad_libros, status, fecha_adquisicion))
+        db.commit()
+
+        cursor.close()
+        db.close()
+
+        return jsonify({'message': 'Registro de inventario creado correctamente'}), 201
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+# Operación para obtener todos los registros del inventario
+@app.route('/inventario', methods=['GET'])
+def get_inventario():
+    try:
+        db = get_db_connection()
+        cursor = db.cursor()
+        cursor.execute("SELECT * FROM Inventario")
+        rows = cursor.fetchall()
+        inventario = [{'id_libro': row[0], 'cantidad_libros': row[1], 'status': row[2], 'fecha_adquisicion': row[3]} for row in rows]
+        cursor.close()
+        db.close()
+        return jsonify(inventario), 200
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+# Operación para actualizar un registro en el inventario
+@app.route('/inventario/<int:id_libro>', methods=['PUT'])
+def update_inventario(id_libro):
+    try:
+        # Obtener datos del cuerpo de la solicitud
+        data = request.json
+        cantidad_libros = data.get('cantidad_libros')
+        status = data.get('status')
+        fecha_adquisicion = data.get('fecha_adquisicion')
+
+        # Actualizar el registro en la tabla Inventario
+        db = get_db_connection()
+        cursor = db.cursor()
+        cursor.execute("UPDATE Inventario SET CantidadLibros = %s, Status = %s, FechaAdquisicion = %s WHERE IDLibro = %s", (cantidad_libros, status, fecha_adquisicion, id_libro))
+        db.commit()
+
+        cursor.close()
+        db.close()
+
+        return jsonify({'message': 'Registro de inventario actualizado correctamente'}), 200
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+# Operación para eliminar un registro del inventario
+@app.route('/inventario/<int:id_libro>', methods=['DELETE'])
+def delete_inventario(id_libro):
+    try:
+        # Eliminar el registro de inventario
+        db = get_db_connection()
+        cursor = db.cursor()
+        cursor.execute("DELETE FROM Inventario WHERE IDLibro = %s", (id_libro,))
+        db.commit()
+
+        cursor.close()
+        db.close()
+
+        return jsonify({'message': 'Registro de inventario eliminado correctamente'}), 200
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
 
 if __name__ == '__main__':
     app.run(debug=True)
