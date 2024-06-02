@@ -540,6 +540,54 @@ def get_prestamos():
     db.close()
     return jsonify(prestamos), 200
 
+# Rutas Reserva
+
+@app.route('/reserva', methods=['POST'])
+def create_reserva():
+    db = get_db_connection()
+    id_usuario = request.json['id_usuario']
+    id_libro = request.json['id_libro']
+    status = request.json['status']
+    reservacion_fecha = request.json['reservacion_fecha']
+    cursor = db.cursor()
+    cursor.execute("INSERT INTO Reserva (IDUsuario, IDLibro, Status, ReservacionFecha) VALUES (%s, %s, %s, %s)",
+                   (id_usuario, id_libro, status, reservacion_fecha))
+    db.commit()
+    cursor.close()
+    db.close()
+    return jsonify({'message': 'Reserva creada'}), 201
+
+@app.route('/reserva/<int:id_reserva>', methods=['DELETE'])
+def delete_reserva(id_reserva):
+    db = get_db_connection()
+    cursor = db.cursor()
+    cursor.execute("DELETE FROM Reserva WHERE IDReserva = %s", (id_reserva,))
+    db.commit()
+    cursor.close()
+    db.close()
+    return jsonify({'message': 'Reserva eliminada'}), 200
+
+@app.route('/reserva', methods=['GET'])
+def get_reservas():
+    db = get_db_connection()
+    cursor = db.cursor()
+    cursor.execute("SELECT * FROM Reserva")
+    reservas = [{'IDReserva': row[0], 'IDUsuario': row[1], 'IDLibro': row[2], 'Status': row[3], 'ReservacionFecha': row[4]} for row in cursor.fetchall()]
+    cursor.close()
+    db.close()
+    return jsonify(reservas), 200
+
+@app.route('/reserva/<int:id_reserva>', methods=['PUT'])
+def update_reserva(id_reserva):
+    db = get_db_connection()
+    status = request.json['status']
+    reservacion_fecha = request.json['reservacion_fecha'] 
+    cursor = db.cursor()
+    cursor.execute("UPDATE Reserva SET Status = %s, ReservacionFecha = %s WHERE IDReserva = %s", (status, reservacion_fecha, id_reserva))
+    db.commit()
+    cursor.close()
+    db.close()
+    return jsonify({'message': 'Reserva actualizada'}), 200
 
 
 if __name__ == '__main__':

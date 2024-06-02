@@ -7,6 +7,7 @@ import { CreateGenero, DeleteGenero, UpdateGenero, ReadGenero } from './componen
 import { CreateLibro, DeleteLibro, UpdateLibro, ReadLibro } from './components/Libro';
 import { CreateInventario, DeleteInventario, UpdateInventario, ReadInventario } from './components/Inventario';
 import { CreatePrestamo, DeletePrestamo, UpdatePrestamo, ReadPrestamo } from './components/Prestamo';
+import { CreateReserva, DeleteReserva, UpdateReserva, ReadReserva } from './components/Reserva';
 
 function App() {
   return (
@@ -51,6 +52,11 @@ function App() {
       <DeletePrestamo />
       <UpdatePrestamo />
       <ReadPrestamo />
+      <h1>Gestión de Reservas</h1>
+      <CreateReserva />
+      <DeleteReserva />
+      <UpdateReserva />
+      <ReadReserva />
     </div>
   );
 }
