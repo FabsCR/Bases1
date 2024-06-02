@@ -283,5 +283,87 @@ def get_generos():
     db.close()
     return jsonify(generos), 200
 
+# Rutas Libro
+
+@app.route('/libro', methods=['POST'])
+def create_libro():
+    db = get_db_connection()
+    titulo = request.json['titulo']
+    anio_publicacion = request.json['anio_publicacion']
+    genero = request.json['genero']
+    editorial = request.json['editorial']
+    autor = request.json['autor']
+    cursor = db.cursor()
+    try:
+        cursor.execute("INSERT INTO Libro (Titulo, AnioPublicacion, Genero, Editorial, Autor) VALUES (%s, %s, %s, %s, %s)", (titulo, anio_publicacion, genero, editorial, autor))
+        db.commit()
+        cursor.close()
+        db.close()
+        return jsonify({'message': 'Libro creado'}), 201
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+@app.route('/libro/<int:id_libro>', methods=['DELETE'])
+def delete_libro(id_libro):
+    db = get_db_connection()
+    cursor = db.cursor()
+    cursor.execute("DELETE FROM Libro WHERE IDLibro = %s", (id_libro,))
+    db.commit()
+    cursor.close()
+    db.close()
+    return jsonify({'deleted': True}), 200
+
+@app.route('/libro/<int:id_libro>', methods=['PUT'])
+def update_libro(id_libro):
+    try:
+        db = get_db_connection()
+        cursor = db.cursor()
+
+        # Obtener datos del libro a actualizar desde el cuerpo de la solicitud
+        data = request.json
+        titulo = data.get('titulo')
+        anio_publicacion = data.get('anio_publicacion')
+        genero = data.get('genero')
+        editorial = data.get('editorial')
+        autor = data.get('autor')
+
+        # Verificar si el género existe en la tabla Genero
+        cursor.execute("SELECT Nombre FROM Genero WHERE Nombre = %s", (genero,))
+        if not cursor.fetchone():
+            return jsonify({'error': f'El género "{genero}" no existe en la tabla Genero'}), 400
+
+        # Verificar si la editorial existe en la tabla Editorial
+        cursor.execute("SELECT Nombre FROM Editorial WHERE Nombre = %s", (editorial,))
+        if not cursor.fetchone():
+            return jsonify({'error': f'La editorial "{editorial}" no existe en la tabla Editorial'}), 400
+
+        # Verificar si el autor existe en la tabla Autor
+        cursor.execute("SELECT IDAutor FROM Autor WHERE IDAutor = %s", (autor,))
+        if not cursor.fetchone():
+            return jsonify({'error': f'El autor con ID {autor} no existe en la tabla Autor'}), 400
+
+        # Actualizar el libro en la base de datos
+        cursor.execute("UPDATE Libro SET Titulo = %s, AnioPublicacion = %s, Genero = %s, Editorial = %s, Autor = %s WHERE IDLibro = %s", (titulo, anio_publicacion, genero, editorial, autor, id_libro))
+        db.commit()
+
+        cursor.close()
+        db.close()
+
+        return jsonify({'message': 'Libro actualizado correctamente'}), 200
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+@app.route('/libro', methods=['GET'])
+def get_libros():
+    db = get_db_connection()
+    cursor = db.cursor()
+    cursor.execute("SELECT * FROM Libro")
+    rows = cursor.fetchall()
+    libros = [{'id_libro': row[0], 'titulo': row[1], 'anio_publicacion': row[2], 'genero': row[3], 'editorial': row[4], 'autor': row[5]} for row in rows]
+    cursor.close()
+    db.close()
+    return jsonify(libros), 200
+
+
 if __name__ == '__main__':
     app.run(debug=True)

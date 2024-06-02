@@ -4,6 +4,7 @@ import { CreateEditorial, DeleteEditorial, UpdateEditorial, ReadEditorial } from
 import { CreateAutor, DeleteAutor, UpdateAutor, ReadAutor } from './components/Autor';
 import { CreateUsuario, DeleteUsuario, UpdateUsuario, ReadUsuario } from './components/Usuario';
 import { CreateGenero, DeleteGenero, UpdateGenero, ReadGenero } from './components/Genero';
+import { CreateLibro, DeleteLibro, UpdateLibro, ReadLibro } from './components/Libro';
 
 function App() {
   return (
@@ -33,6 +34,11 @@ function App() {
       <DeleteGenero />
       <UpdateGenero />
       <ReadGenero />
+      <h1>Gestión de Libros</h1>
+      <CreateLibro />
+      <DeleteLibro />
+      <UpdateLibro />
+      <ReadLibro />
     </div>
   );
 }
