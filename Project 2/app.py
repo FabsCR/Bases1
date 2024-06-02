@@ -157,13 +157,26 @@ def create_autor():
 
 @app.route('/autor/<int:id_autor>', methods=['DELETE'])
 def delete_autor(id_autor):
-    db = get_db_connection()
-    cursor = db.cursor()
-    cursor.execute("DELETE FROM Autor WHERE IDAutor = %s", (id_autor,))
-    db.commit()
-    cursor.close()
-    db.close()
-    return jsonify({'deleted': True}), 200
+    try:
+        db = get_db_connection()
+        cursor = db.cursor()
+
+        # Verificar si el autor existe
+        cursor.execute("SELECT IDAutor FROM Autor WHERE IDAutor = %s", (id_autor,))
+        if not cursor.fetchone():
+            return jsonify({'error': f'El autor con ID {id_autor} no existe'}), 404
+
+        # Eliminar el autor
+        cursor.execute("DELETE FROM Autor WHERE IDAutor = %s", (id_autor,))
+        db.commit()
+
+        cursor.close()
+        db.close()
+
+        return jsonify({'message': f'Autor con ID {id_autor} eliminado correctamente'}), 200
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
 
 @app.route('/autor/<int:id_autor>', methods=['PUT'])
 def update_autor(id_autor):
