@@ -15,10 +15,6 @@ const CreateMulta = () => {
             body: JSON.stringify({ id_prestamo: idPrestamo, monto, estado }),
         });
         await response.json();
-        // Clear input fields after creating multa
-        setIdPrestamo('');
-        setMonto('');
-        setEstado('');
     };
 
     return (

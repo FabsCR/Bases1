@@ -15,10 +15,6 @@ const UpdateMulta = () => {
             body: JSON.stringify({ monto, estado }),
         });
         await response.json();
-        // Clear input fields after updating multa
-        setIdMulta('');
-        setMonto('');
-        setEstado('');
     };
 
     return (

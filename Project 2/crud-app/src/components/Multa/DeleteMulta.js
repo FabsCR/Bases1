@@ -9,8 +9,6 @@ const DeleteMulta = () => {
             method: 'DELETE',
         });
         await response.json();
-        // Clear input field after deleting multa
-        setIdMulta('');
     };
 
     return (
