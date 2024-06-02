@@ -238,6 +238,50 @@ def get_usuarios():
     db.close()
     return jsonify(usuarios), 200
 
+# Rutas Genero
+
+@app.route('/genero', methods=['POST'])
+def create_genero():
+    db = get_db_connection()
+    nombre = request.json['nombre']
+    cursor = db.cursor()
+    cursor.execute("INSERT INTO Genero (Nombre) VALUES (%s)", (nombre,))
+    db.commit()
+    cursor.close()
+    db.close()
+    return jsonify({'message': 'Género creado'}), 201
+
+@app.route('/genero/<string:nombre>', methods=['DELETE'])
+def delete_genero(nombre):
+    db = get_db_connection()
+    cursor = db.cursor()
+    cursor.execute("DELETE FROM Genero WHERE Nombre = %s", (nombre,))
+    db.commit()
+    cursor.close()
+    db.close()
+    return jsonify({'deleted': True}), 200
+
+@app.route('/genero/<string:nombre>', methods=['PUT'])
+def update_genero(nombre):
+    db = get_db_connection()
+    nuevo_nombre = request.json['nombre']
+    cursor = db.cursor()
+    cursor.execute("UPDATE Genero SET Nombre = %s WHERE Nombre = %s", (nuevo_nombre, nombre))
+    db.commit()
+    cursor.close()
+    db.close()
+    return jsonify({'updated': True}), 200
+
+@app.route('/genero', methods=['GET'])
+def get_generos():
+    db = get_db_connection()
+    cursor = db.cursor()
+    cursor.execute("SELECT * FROM Genero")
+    rows = cursor.fetchall()
+    generos = [{'nombre': row[0]} for row in rows]
+    cursor.close()
+    db.close()
+    return jsonify(generos), 200
 
 if __name__ == '__main__':
     app.run(debug=True)
