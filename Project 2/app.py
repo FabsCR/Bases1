@@ -589,6 +589,54 @@ def update_reserva(id_reserva):
     db.close()
     return jsonify({'message': 'Reserva actualizada'}), 200
 
+# Rutas Multa
+
+@app.route('/multa', methods=['POST'])
+def create_multa():
+    db = get_db_connection()
+    id_prestamo = request.json['id_prestamo']
+    monto = request.json['monto']
+    estado = request.json['estado']
+    cursor = db.cursor()
+    cursor.execute("INSERT INTO Multa (IDPrestamo, Monto, Estado) VALUES (%s, %s, %s)",
+                   (id_prestamo, monto, estado))
+    db.commit()
+    cursor.close()
+    db.close()
+    return jsonify({'message': 'Multa creada'}), 201
+
+@app.route('/multa/<int:id_multa>', methods=['DELETE'])
+def delete_multa(id_multa):
+    db = get_db_connection()
+    cursor = db.cursor()
+    cursor.execute("DELETE FROM Multa WHERE IDMulta = %s", (id_multa,))
+    db.commit()
+    cursor.close()
+    db.close()
+    return jsonify({'message': 'Multa eliminada'}), 200
+
+@app.route('/multa', methods=['GET'])
+def get_multas():
+    db = get_db_connection()
+    cursor = db.cursor()
+    cursor.execute("SELECT * FROM Multa")
+    multas = [{'IDMulta': row[0], 'IDPrestamo': row[1], 'Monto': row[2], 'Estado': row[3]} for row in cursor.fetchall()]
+    cursor.close()
+    db.close()
+    return jsonify(multas), 200
+
+@app.route('/multa/<int:id_multa>', methods=['PUT'])
+def update_multa(id_multa):
+    db = get_db_connection()
+    monto = request.json['monto']
+    estado = request.json['estado']
+    cursor = db.cursor()
+    cursor.execute("UPDATE Multa SET Monto = %s, Estado = %s WHERE IDMulta = %s", (monto, estado, id_multa))
+    db.commit()
+    cursor.close()
+    db.close()
+    return jsonify({'message': 'Multa actualizada'}), 200
+
 
 if __name__ == '__main__':
     app.run(debug=True)

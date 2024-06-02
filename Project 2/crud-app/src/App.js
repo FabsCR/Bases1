@@ -8,6 +8,7 @@ import { CreateLibro, DeleteLibro, UpdateLibro, ReadLibro } from './components/L
 import { CreateInventario, DeleteInventario, UpdateInventario, ReadInventario } from './components/Inventario';
 import { CreatePrestamo, DeletePrestamo, UpdatePrestamo, ReadPrestamo } from './components/Prestamo';
 import { CreateReserva, DeleteReserva, UpdateReserva, ReadReserva } from './components/Reserva';
+import { CreateMulta, DeleteMulta, UpdateMulta, ReadMulta } from './components/Multa';
 
 function App() {
   return (
@@ -57,6 +58,11 @@ function App() {
       <DeleteReserva />
       <UpdateReserva />
       <ReadReserva />
+      <h1>Gestión de Multas</h1>
+      <CreateMulta />
+      <DeleteMulta />
+      <UpdateMulta />
+      <ReadMulta />
     </div>
   );
 }
