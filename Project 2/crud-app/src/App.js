@@ -13,12 +13,14 @@ import ReadReporteLibros from './components/Vistas/ReporteLibros';
 import ReadReporteInventario from './components/Vistas/ReporteInventario';
 import ReadReportePrestamos from './components/Vistas/ReportePrestamos';
 import ReadReporteUsuarios from './components/Vistas/ReporteUsuarios';
+import ReadReporteMultas from './components/Vistas/ReporteMultas';
 
 function App() {
   const [showLibros, setShowLibros] = useState(false);
   const [showInventario, setShowInventario] = useState(false);
   const [showPrestamos, setShowPrestamos] = useState(false);
   const [showUsuarios, setShowUsuarios] = useState(false);
+  const [showMultas, setShowMultas] = useState(false);
 
   return (
     <div className="App">
@@ -85,6 +87,9 @@ function App() {
 
       <button onClick={() => setShowUsuarios(!showUsuarios)}>Mostrar Reporte Usuarios</button>
       {showUsuarios && <ReadReporteUsuarios />}
+
+      <button onClick={() => setShowMultas(!showMultas)}>Mostrar Reporte Multas</button>
+      {showMultas && <ReadReporteMultas />}
     </div>
   );
 }

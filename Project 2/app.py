@@ -896,6 +896,29 @@ def get_reporte_usuarios():
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
+@app.route('/reporte_multas', methods=['GET'])
+def get_reporte_multas():
+    try:
+        db = get_db_connection()
+        cursor = db.cursor()
+        cursor.execute("SELECT * FROM ReporteMultas")
+        rows = cursor.fetchall()
+        multas = [
+            {
+                'IDMulta': row[0],
+                'IDPrestamo': row[1],
+                'TituloLibro': row[2],
+                'Usuario': row[3],
+                'Monto': row[4],
+                'Estado': row[5]
+            }
+            for row in rows
+        ]
+        cursor.close()
+        db.close()
+        return jsonify(multas), 200
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
 if __name__ == '__main__':
     app.run(debug=True)
