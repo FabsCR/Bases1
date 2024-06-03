@@ -23,6 +23,7 @@ const ReporteLibros = () => {
 
     return (
         <div>
+            <h2>Reporte de Libros</h2>
             {error && <p>Error: {error}</p>}
             <table>
                 <thead>

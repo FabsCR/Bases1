@@ -9,12 +9,15 @@ import { CreateInventario, DeleteInventario, UpdateInventario, ReadInventario } 
 import { CreatePrestamo, DeletePrestamo, UpdatePrestamo, ReadPrestamo } from './components/Prestamo';
 import { CreateReserva, DeleteReserva, UpdateReserva, ReadReserva } from './components/Reserva';
 import { CreateMulta, DeleteMulta, UpdateMulta, ReadMulta } from './components/Multa';
-import ReporteLibros from './components/Vistas/ReporteLibros';
-import ReporteInventario from './components/Vistas/ReporteInventario'; 
+import ReadReporteLibros from './components/Vistas/ReporteLibros';
+import ReadReporteInventario from './components/Vistas/ReporteInventario';
+import ReadReportePrestamos from './components/Vistas/ReportePrestamos';
 
 function App() {
-  const [showReporteLibros, setShowReporteLibros] = useState(false);
-  const [showReporteInventario, setShowReporteInventario] = useState(false);
+  const [showLibros, setShowLibros] = useState(false);
+  const [showInventario, setShowInventario] = useState(false);
+  const [showPrestamos, setShowPrestamos] = useState(false);
+
   return (
     <div className="App">
       <h1>Gestión de Personas</h1>
@@ -67,15 +70,16 @@ function App() {
       <DeleteMulta />
       <UpdateMulta />
       <ReadMulta />
+
       <h1>Reportes</h1>
-      <button onClick={() => setShowReporteLibros(!showReporteLibros)}>
-        {showReporteLibros ? 'Ocultar' : 'Mostrar'} Reporte de Libros
-      </button>
-      {showReporteLibros && <ReporteLibros />}
-      <button onClick={() => setShowReporteInventario(!showReporteInventario)}>
-        {showReporteInventario ? 'Ocultar' : 'Mostrar'} Reporte de Inventario
-      </button>
-      {showReporteInventario && <ReporteInventario />}
+      <button onClick={() => setShowLibros(!showLibros)}>Mostrar Reporte Libros</button>
+      {showLibros && <ReadReporteLibros />}
+      
+      <button onClick={() => setShowInventario(!showInventario)}>Mostrar Reporte Inventario</button>
+      {showInventario && <ReadReporteInventario />}
+      
+      <button onClick={() => setShowPrestamos(!showPrestamos)}>Mostrar Reporte Préstamos</button>
+      {showPrestamos && <ReadReportePrestamos />}
     </div>
   );
 }
