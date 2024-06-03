@@ -872,5 +872,30 @@ def get_reporte_inventario():
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
+@app.route('/reporte_usuarios', methods=['GET'])
+def get_reporte_usuarios():
+    try:
+        db = get_db_connection()
+        cursor = db.cursor()
+        cursor.execute("SELECT * FROM ReporteUsuarios")
+        rows = cursor.fetchall()
+        usuarios = [
+            {
+                'IDUsuario': row[0],
+                'Usuario': row[1],
+                'IDReserva': row[2],
+                'ReservacionFecha': row[3],
+                'TituloLibro': row[4],
+                'Status': row[5]
+            }
+            for row in rows
+        ]
+        cursor.close()
+        db.close()
+        return jsonify(usuarios), 200
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+
 if __name__ == '__main__':
     app.run(debug=True)

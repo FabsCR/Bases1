@@ -12,11 +12,13 @@ import { CreateMulta, DeleteMulta, UpdateMulta, ReadMulta } from './components/M
 import ReadReporteLibros from './components/Vistas/ReporteLibros';
 import ReadReporteInventario from './components/Vistas/ReporteInventario';
 import ReadReportePrestamos from './components/Vistas/ReportePrestamos';
+import ReadReporteUsuarios from './components/Vistas/ReporteUsuarios';
 
 function App() {
   const [showLibros, setShowLibros] = useState(false);
   const [showInventario, setShowInventario] = useState(false);
   const [showPrestamos, setShowPrestamos] = useState(false);
+  const [showUsuarios, setShowUsuarios] = useState(false);
 
   return (
     <div className="App">
@@ -75,11 +77,14 @@ function App() {
       <button onClick={() => setShowLibros(!showLibros)}>Mostrar Reporte Libros</button>
       {showLibros && <ReadReporteLibros />}
       
-      <button onClick={() => setShowInventario(!showInventario)}>Mostrar Reporte Inventario</button>
-      {showInventario && <ReadReporteInventario />}
-      
       <button onClick={() => setShowPrestamos(!showPrestamos)}>Mostrar Reporte Préstamos</button>
       {showPrestamos && <ReadReportePrestamos />}
+
+      <button onClick={() => setShowInventario(!showInventario)}>Mostrar Reporte Inventario</button>
+      {showInventario && <ReadReporteInventario />}
+
+      <button onClick={() => setShowUsuarios(!showUsuarios)}>Mostrar Reporte Usuarios</button>
+      {showUsuarios && <ReadReporteUsuarios />}
     </div>
   );
 }
