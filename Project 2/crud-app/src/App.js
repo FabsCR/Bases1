@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { CreatePersona, DeletePersona, UpdatePersona, ReadPersona } from './components/Persona';
 import { CreateEditorial, DeleteEditorial, UpdateEditorial, ReadEditorial } from './components/Editorial';
 import { CreateAutor, DeleteAutor, UpdateAutor, ReadAutor } from './components/Autor';
@@ -12,6 +12,7 @@ import { CreateMulta, DeleteMulta, UpdateMulta, ReadMulta } from './components/M
 import ReporteLibros from './components/Vistas/ReporteLibros';
 
 function App() {
+  const [showReporteLibros, setShowReporteLibros] = useState(false);
   return (
     <div className="App">
       <h1>Gestión de Personas</h1>
@@ -64,8 +65,11 @@ function App() {
       <DeleteMulta />
       <UpdateMulta />
       <ReadMulta />
-      <h1>Reporte de Libros</h1>
-      <ReporteLibros />
+      <h1>Reportes</h1>
+      <button onClick={() => setShowReporteLibros(!showReporteLibros)}>
+        {showReporteLibros ? 'Ocultar' : 'Mostrar'} Reporte de Libros
+      </button>
+      {showReporteLibros && <ReporteLibros />}
     </div>
   );
 }
