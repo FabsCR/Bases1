@@ -813,73 +813,17 @@ def get_reporte_libros():
         cursor = db.cursor()
         cursor.execute("SELECT * FROM ReporteLibros")
         rows = cursor.fetchall()
+        columns = [desc[0] for desc in cursor.description]
         cursor.close()
         db.close()
-        columns = [desc[0] for desc in cursor.description]
-        report = [dict(zip(columns, row)) for row in rows]
-        return jsonify(report), 200
+        if rows:
+            report = [dict(zip(columns, row)) for row in rows]
+            return jsonify(report), 200
+        else:
+            return jsonify([]), 200
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
-@app.route('/reporte_prestamos', methods=['GET'])
-def get_reporte_prestamos():
-    try:
-        db = get_db_connection()
-        cursor = db.cursor()
-        cursor.execute("SELECT * FROM ReportePrestamos")
-        rows = cursor.fetchall()
-        cursor.close()
-        db.close()
-        columns = [desc[0] for desc in cursor.description]
-        report = [dict(zip(columns, row)) for row in rows]
-        return jsonify(report), 200
-    except Exception as e:
-        return jsonify({'error': str(e)}), 500
-
-@app.route('/reporte_inventario', methods=['GET'])
-def get_reporte_inventario():
-    try:
-        db = get_db_connection()
-        cursor = db.cursor()
-        cursor.execute("SELECT * FROM ReporteInventario")
-        rows = cursor.fetchall()
-        cursor.close()
-        db.close()
-        columns = [desc[0] for desc in cursor.description]
-        report = [dict(zip(columns, row)) for row in rows]
-        return jsonify(report), 200
-    except Exception as e:
-        return jsonify({'error': str(e)}), 500
-
-@app.route('/reporte_usuarios', methods=['GET'])
-def get_reporte_usuarios():
-    try:
-        db = get_db_connection()
-        cursor = db.cursor()
-        cursor.execute("SELECT * FROM ReporteUsuarios")
-        rows = cursor.fetchall()
-        cursor.close()
-        db.close()
-        columns = [desc[0] for desc in cursor.description]
-        report = [dict(zip(columns, row)) for row in rows]
-        return jsonify(report), 200
-    except Exception as e:
-        return jsonify({'error': str(e)}), 500
-
-@app.route('/reporte_multas', methods=['GET'])
-def get_reporte_multas():
-    try:
-        db = get_db_connection()
-        cursor = db.cursor()
-        cursor.execute("SELECT * FROM ReporteMultas")
-        rows = cursor.fetchall()
-        cursor.close()
-        db.close()
-        columns = [desc[0] for desc in cursor.description]
-        report = [dict(zip(columns, row)) for row in rows]
-        return jsonify(report), 200
-    except Exception as e:
-        return jsonify({'error': str(e)}), 500
 
 if __name__ == '__main__':
     app.run(debug=True)

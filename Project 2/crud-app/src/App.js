@@ -9,6 +9,7 @@ import { CreateInventario, DeleteInventario, UpdateInventario, ReadInventario } 
 import { CreatePrestamo, DeletePrestamo, UpdatePrestamo, ReadPrestamo } from './components/Prestamo';
 import { CreateReserva, DeleteReserva, UpdateReserva, ReadReserva } from './components/Reserva';
 import { CreateMulta, DeleteMulta, UpdateMulta, ReadMulta } from './components/Multa';
+import ReporteLibros from './components/Vistas/ReporteLibros';
 
 function App() {
   return (
@@ -63,6 +64,8 @@ function App() {
       <DeleteMulta />
       <UpdateMulta />
       <ReadMulta />
+      <h1>Reporte de Libros</h1>
+      <ReporteLibros />
     </div>
   );
 }
