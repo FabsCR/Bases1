@@ -1,6 +1,5 @@
 -- Insertar datos -- 
 
-
 -- Datos de prueba para la tabla Persona
 INSERT INTO Persona (Nombre, Apellido) VALUES
 ('Juan', 'González'),

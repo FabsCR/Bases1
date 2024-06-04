@@ -14,12 +14,10 @@ CREATE TABLE Persona (
     Apellido VARCHAR(100)
 );
 
-
 CREATE TABLE Editorial (
     Nombre VARCHAR(100) PRIMARY KEY,
     Pais VARCHAR(100)
 );
-
 
 CREATE TABLE Autor (
     IDAutor INT PRIMARY KEY,
@@ -37,11 +35,9 @@ CREATE TABLE Usuario (
     FOREIGN KEY (IDPersona) REFERENCES Persona(codigoPersona)
 );
 
-
 CREATE TABLE Genero (
     Nombre VARCHAR(100) PRIMARY KEY
 );
-
 
 CREATE TABLE Libro (
     IDLibro INT PRIMARY KEY,
