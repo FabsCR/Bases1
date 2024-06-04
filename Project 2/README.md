@@ -2,12 +2,21 @@
 
 Esta es una guía para la instalación y uso del proyecto, el cual consiste en una aplicación CRUD para gestionar una base de datos MySQL.
 
+## Clonar Repositorio
+
+Para obtener una copia del repositorio, puedes clonarlo utilizando el siguiente comando en tu terminal:
+
+```bash
+git clone https://github.com/FabsCR/Bases1.git
+```
+
 ## Requisitos Previos
 
 Antes de comenzar con la instalación y uso de este proyecto, asegúrate de tener los siguientes requisitos previos:
 
-- Base de datos MySQL creada previamente con los scripts proporcionados.
+- Base de datos MySQL creada previamente con los scripts proporcionados. Los scripts están ubicados en la carpeta `Scripts`.
 - Base de datos MySQL en ejecución.
+
 
 ## Backend (app.py)
 
@@ -39,7 +48,10 @@ Para utilizar el frontend React, sigue estos pasos:
 
 2. Abre una terminal y navega hasta el directorio del proyecto.
 
-3. Instala las dependencias del frontend ejecutando el siguiente comando en la terminal:
+3. Cambia al directorio `crud-app`, que es donde se encuentra la aplicación React.
+
+4. Instala las dependencias del frontend ejecutando el siguiente comando en la terminal:
+
 
 ```bash
 npm install
