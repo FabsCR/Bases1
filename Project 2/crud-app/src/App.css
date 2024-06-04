@@ -71,9 +71,21 @@ form {
   text-align: center;
 }
 
+form input[type="text"],
+form input[type="date"], 
+form input[type="number"],
+form input[type="email"],
+form input[type="password"],
+form input[type="tel"]{
+  width: 200px; 
+  height: 25px; 
+  font-size: 14px; 
+  margin-bottom: 5px;
+}
+
 h2 {
   margin-top: 20px;
-  font-size: 24px;
+  font-size: 22px;
   font-weight: bold;
   color: #007bff; 
   text-align: center;
