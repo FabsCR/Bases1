@@ -3,18 +3,24 @@ import React, { useState, useEffect } from 'react';
 const ReadUsuarios = () => {
     const [usuarios, setUsuarios] = useState([]);
 
+    const fetchUsuarios = async () => {
+        const response = await fetch('http://localhost:5000/usuario');
+        const data = await response.json();
+        setUsuarios(data);
+    };
+
     useEffect(() => {
-        const fetchUsuarios = async () => {
-            const response = await fetch('http://localhost:5000/usuario');
-            const data = await response.json();
-            setUsuarios(data);
-        };
         fetchUsuarios();
     }, []);
+
+    const handleRefresh = () => {
+        fetchUsuarios();
+    };
 
     return (
         <div>
             <h2>Lista de Usuarios</h2>
+            <button onClick={handleRefresh}>Actualizar lista</button>
             <ul>
                 {usuarios.map(usuario => (
                     <li key={usuario.id_usuario}>

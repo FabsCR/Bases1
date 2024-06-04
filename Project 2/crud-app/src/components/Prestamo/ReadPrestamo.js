@@ -3,18 +3,24 @@ import React, { useState, useEffect } from 'react';
 const ReadPrestamo = () => {
     const [prestamos, setPrestamos] = useState([]);
 
+    const fetchPrestamos = async () => {
+        const response = await fetch('http://localhost:5000/prestamo');
+        const data = await response.json();
+        setPrestamos(data);
+    };
+
     useEffect(() => {
-        const fetchPrestamos = async () => {
-            const response = await fetch('http://localhost:5000/prestamo');
-            const data = await response.json();
-            setPrestamos(data);
-        };
         fetchPrestamos();
     }, []);
+
+    const handleRefresh = () => {
+        fetchPrestamos();
+    };
 
     return (
         <div>
             <h2>Lista de Préstamos</h2>
+            <button onClick={handleRefresh}>Actualizar lista</button>
             <ul>
                 {prestamos.map(prestamo => (
                     <li key={prestamo.id_prestamo}>
