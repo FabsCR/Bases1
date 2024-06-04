@@ -25,6 +25,8 @@ function App() {
 
   return (
     <div className="App">
+      <h1>CRUD APP - Biblioteca SanCharlie
+      </h1>
       <h1>Gestión de Personas</h1>
       <CreatePersona />
       <DeletePersona />
