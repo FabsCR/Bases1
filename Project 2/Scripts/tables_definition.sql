@@ -1,5 +1,5 @@
 -- Segundo proyecto de Bases de Datos 1.
--- Estudiantes: Angelica Harmon Arias, Fabián José Fernández Fernández, Christian Salas Calero.
+-- Estudiantes: Angelica Harmon Arias, Fabián José Fernández Fernández
 
 -- Instrucción para crear la base de datos
 CREATE DATABASE Proyecto_BaseDeDatos1; 
