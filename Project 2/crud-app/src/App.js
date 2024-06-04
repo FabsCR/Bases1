@@ -25,8 +25,7 @@ function App() {
 
   return (
     <div className="App">
-      <h1>CRUD APP - Biblioteca SanCharlie
-      </h1>
+      <h1>CRUD APP - Biblioteca San Charlie</h1>
       <h1>Gestión de Personas</h1>
       <CreatePersona />
       <DeletePersona />
@@ -93,6 +92,11 @@ function App() {
 
       <button onClick={() => setShowMultas(!showMultas)}>Mostrar Reporte Multas</button>
       {showMultas && <ReadReporteMultas />}
+
+      <div className="link-container">
+      <a href="https://github.com/FabsCR/Bases1" target="_blank" rel="noreferrer">Github Repo</a>
+      </div>
+    
     </div>
   );
 }

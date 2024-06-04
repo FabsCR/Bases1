@@ -108,3 +108,23 @@ li {
 li:last-child {
   border-bottom: none; 
 }
+
+.link-container {
+  text-align: center;
+}
+
+.link-container a {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 8px 16px;
+  background-color: #09ff00;
+  color: #000000;
+  text-decoration: none;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+  font-weight: bold;
+}
+
+.link-container a:hover {
+  background-color: #04e200;
+}
